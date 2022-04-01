@@ -32,18 +32,18 @@ app.get('/badmintoncourts/add', async (req, res) => {
     res.render('badmintonCourts/add');
 });
 
-// show a badminton court
-app.get('/badmintoncourts/:id', async (req, res) => {
-    // const badmintoncourt = await BadmintonCourt.findById(req.params.id);
-    res.render('badmintonCourts/show');
+// Adds a badminton court to database
+app.post('/badmintoncourts', async (req, res) => {
+    const badmintoncourt = new BadmintonCourt(req.body.badmintoncourt);
+    await badmintoncourt.save();
+    res.redirect(`badmintoncourts/${badmintoncourt._id}`);
 });
 
-// Adds a badminton court
-// app.post('/badmintoncourts', async(req, res) => {
-//     const badmintoncourt = new BadmintonCourt(req.body.badmintoncourt)
-//     await badmintoncourt.save()
-//     res.redirect()
-// })
+// show a badminton court
+app.get('/badmintoncourts/:id', async (req, res) => {
+    const badmintoncourt = await BadmintonCourt.findById(req.params.id);
+    res.render('badmintonCourts/show', { badmintoncourt });
+});
 
 app.listen('8080', () => {
     console.log('Listening to PORT 8080');

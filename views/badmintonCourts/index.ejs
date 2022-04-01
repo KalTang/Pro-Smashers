@@ -12,7 +12,11 @@
 
         <ul>
             <% for(let badmintoncourt of badmintoncourts) { %>
-            <li><%= badmintoncourt.title %></li>
+            <li>
+                <a href="/badmintoncourts/<%= badmintoncourt._id %>"
+                    ><%= badmintoncourt.title %></a
+                >
+            </li>
             <% } %>
         </ul>
     </body>
