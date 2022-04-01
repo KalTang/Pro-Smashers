@@ -9,5 +9,11 @@
         <h1>All Badminton Courts</h1>
 
         <a href="/badmintoncourts/add">Add a new court</a>
+
+        <ul>
+            <% for(let badmintoncourt of badmintoncourts) { %>
+            <li><%= badmintoncourt.title %></li>
+            <% } %>
+        </ul>
     </body>
 </html>
