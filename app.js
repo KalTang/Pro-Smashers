@@ -47,9 +47,19 @@ app.get('/badmintoncourts/:id', async (req, res) => {
     res.render('badmintonCourts/show', { badmintoncourt });
 });
 
+// Takes you to the edit form for the
 app.get('/badmintoncourts/:id/edit', async (req, res) => {
     const badmintoncourt = await BadmintonCourt.findById(req.params.id);
     res.render('badmintoncourts/edit', { badmintoncourt });
+});
+
+// updates the badminton court
+app.put('/badmintoncourts/:id', async (req, res) => {
+    const { id } = req.params;
+    const badmintoncourt = await BadmintonCourt.findByIdAndUpdate(id, {
+        ...req.body.badmintoncourt,
+    });
+    res.redirect(`/badmintoncourts/${badmintoncourt._id}`);
 });
 
 app.listen('8080', () => {
