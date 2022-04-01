@@ -53,13 +53,20 @@ app.get('/badmintoncourts/:id/edit', async (req, res) => {
     res.render('badmintoncourts/edit', { badmintoncourt });
 });
 
-// updates the badminton court
+// updates a badminton court
 app.put('/badmintoncourts/:id', async (req, res) => {
     const { id } = req.params;
     const badmintoncourt = await BadmintonCourt.findByIdAndUpdate(id, {
         ...req.body.badmintoncourt,
     });
     res.redirect(`/badmintoncourts/${badmintoncourt._id}`);
+});
+
+// Deletes a badminton court
+app.delete('/badmintoncourts/:id/', async (req, res) => {
+    const { id } = req.params;
+    await BadmintonCourt.findByIdAndDelete(id);
+    res.redirect('/badmintoncourts');
 });
 
 app.listen('8080', () => {

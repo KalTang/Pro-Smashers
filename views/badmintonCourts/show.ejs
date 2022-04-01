@@ -9,10 +9,17 @@
         <h1><%= badmintoncourt.title %></h1>
         <h3><%= badmintoncourt.city %>, <%= badmintoncourt.country %></h3>
 
+        <p>
+            <form action="/badmintoncourts/<%= badmintoncourt._id%>?_method=DELETE " method="POST">
+            
+            <button>Delete</button>    
+            </form>
+        </p>
+
         <a href="/badmintoncourts">Show all courts</a>
         <footer>
             <a href="/badmintoncourts/<%= badmintoncourt._id %>/edit ">Edit</a>
-            <a href="">Delete</a>
+        
         </footer>
     </body>
 </html>
