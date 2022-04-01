@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>Edit</title>
+    </head>
+    <body>
+        <h1>Edit badminton court</h1>
+
+        <form
+            action="/badmintoncourts/<%= badmintoncourt._id %>?_method=PUT"
+            method="POST"
+        >
+            <div>
+                <label for="title">Title</label>
+                <input
+                    type="text"
+                    id="title"
+                    name="badmintoncourt[title]"
+                    value="<%= badmintoncourt.title  %> "
+                />
+            </div>
+
+            <div>
+                <label for="title">City</label>
+                <input
+                    type="text"
+                    id="city"
+                    name="badmintoncourt[city]"
+                    value="<%= badmintoncourt.city %>"
+                />
+            </div>
+            <div>
+                <label for="title">Country</label>
+                <input
+                    type="text"
+                    id="country"
+                    name="badmintoncourt[country]"
+                    value="<%= badmintoncourt.country %>"
+                />
+            </div>
+            <button>Update</button>
+        </form>
+
+        <a href="">Back</a>
+    </body>
+</html>

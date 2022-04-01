@@ -47,6 +47,11 @@ app.get('/badmintoncourts/:id', async (req, res) => {
     res.render('badmintonCourts/show', { badmintoncourt });
 });
 
+app.get('/badmintoncourts/:id/edit', async (req, res) => {
+    const badmintoncourt = await BadmintonCourt.findById(req.params.id);
+    res.render('badmintoncourts/edit', { badmintoncourt });
+});
+
 app.listen('8080', () => {
     console.log('Listening to PORT 8080');
 });
