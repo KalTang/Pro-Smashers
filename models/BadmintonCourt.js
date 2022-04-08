@@ -6,6 +6,8 @@ const BadmintonCourtSchema = new Schema({
     city: String,
     country: String,
     price: String,
+    image: String,
+    description: String,
 });
 
 module.exports = mongoose.model('BadmintonCourt', BadmintonCourtSchema);
