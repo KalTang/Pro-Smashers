@@ -21,5 +21,6 @@ const seedDB = async () => {
 
 seedDB().then(() => {
     console.log('Pro-Smashers app seeded successfully');
+    console.log(BadmintonCourt);
     mongoose.connection.close();
 });

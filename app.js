@@ -4,6 +4,7 @@ const path = require('path');
 const mongoose = require('mongoose');
 const BadmintonCourt = require('./models/BadmintonCourt');
 const methodOverride = require('method-override');
+const engine = require('ejs-mate');
 
 mongoose.connect('mongodb://localhost:27017/BadmintonBaddies');
 
@@ -13,6 +14,7 @@ db.once('open', () => {
     console.log('Database connected');
 });
 
+app.engine('ejs', engine);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
 
