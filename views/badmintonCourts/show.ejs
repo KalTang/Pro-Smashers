@@ -1,25 +1,46 @@
-<!DOCTYPE html>
-<html lang="en">
-    <head>
-        <meta charset="UTF-8" />
-        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-        <title>Show</title>
-    </head>
-    <body>
-        <h1><%= badmintoncourt.title %></h1>
-        <h3><%= badmintoncourt.city %>, <%= badmintoncourt.country %></h3>
+<% layout('layouts/boilerplate') %>
 
-        <p>
-            <form action="/badmintoncourts/<%= badmintoncourt._id%>?_method=DELETE " method="POST">
-            
-            <button>Delete</button>    
-            </form>
-        </p>
+<div class="row">
+    <div class="col-6 offset-3">
+        <div class="card mb-3">
+            <img
+                src="<%= badmintoncourt.image  %> "
+                class="card-img-top"
+                alt=""
+            />
+            <div class="card-body">
+                <h5 class="card-title"><%= badmintoncourt.title %></h5>
+                <p class="card-text"><%= badmintoncourt.description %></p>
+            </div>
 
-        <a href="/badmintoncourts">Show all courts</a>
-        <footer>
-            <a href="/badmintoncourts/<%= badmintoncourt._id %>/edit ">Edit</a>
-        
-        </footer>
-    </body>
-</html>
+            <ul class="list-group list-group-flush">
+                <li class="list-group-item">
+                    $<%= badmintoncourt.price %>/ per hour
+                </li>
+                <li class="list-group-item text-muted">
+                    <%= badmintoncourt.city %>, <%= badmintoncourt.country %>
+                </li>
+            </ul>
+
+            <div class="card-body">
+                <a
+                    class="card-link btn btn-info"
+                    href="/badmintoncourts/<%= badmintoncourt._id %>/edit"
+                    class="card-link"
+                    >Edit Court</a
+                >
+                <form
+                    class="d-inline"
+                    action="/badmintoncourts/<%= badmintoncourt._id %>?_method=DELETE"
+                    method="POST"
+                >
+                    <button class="btn btn-danger">Delete</button>
+                </form>
+            </div>
+
+            <div class="card-footer">
+                <a href="/badmintoncourts">Back to all courts</a>
+            </div>
+        </div>
+    </div>
+</div>
