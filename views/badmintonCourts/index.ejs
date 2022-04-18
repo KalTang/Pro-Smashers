@@ -2,14 +2,41 @@
 
 <h1>All Badminton Courts</h1>
 
-<a href="/badmintoncourts/add">Add a new court</a>
-
+<div class="mb-5">
+    <a href="/badmintoncourts/add">Add a new court</a>
+</div>
 <ul>
     <% for(let badmintoncourt of badmintoncourts) { %>
-    <li>
-        <a href="/badmintoncourts/<%= badmintoncourt._id %>"
-            ><%= badmintoncourt.title %></a
-        >
-    </li>
+
+    <div class="card mb-3">
+        <div class="row">
+            <div class="col-md-4">
+                <img
+                    class="img-fluid"
+                    src="<%= badmintoncourt.image  %> "
+                    alt=""
+                />
+            </div>
+
+            <div class="col-md-8">
+                <h5 class="card-title mt-3 mb-3">
+                    <%= badmintoncourt.title %>
+                </h5>
+                <p class="card-text mb-3"><%= badmintoncourt.description %></p>
+                <p class="card-text">
+                    <large class="text-muted">
+                        <%= badmintoncourt.city %>, <%= badmintoncourt.country
+                        %>
+                    </large>
+                </p>
+                <a
+                    class="btn btn-primary"
+                    href="/badmintoncourts/<%= badmintoncourt._id  %> "
+                >
+                    View <%= badmintoncourt.title %>
+                </a>
+            </div>
+        </div>
+    </div>
     <% } %>
 </ul>
