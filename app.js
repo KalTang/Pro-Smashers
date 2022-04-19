@@ -5,6 +5,7 @@ const mongoose = require('mongoose');
 const BadmintonCourt = require('./models/BadmintonCourt');
 const methodOverride = require('method-override');
 const engine = require('ejs-mate');
+const catchAsync = require('./utils/catchAsync');
 
 mongoose.connect('mongodb://localhost:27017/BadmintonBaddies');
 
@@ -37,11 +38,14 @@ app.get('/badmintoncourts/add', async (req, res) => {
 });
 
 // Adds a badminton court to database
-app.post('/badmintoncourts', async (req, res) => {
-    const badmintoncourt = new BadmintonCourt(req.body.badmintoncourt);
-    await badmintoncourt.save();
-    res.redirect(`badmintoncourts/${badmintoncourt._id}`);
-});
+app.post(
+    '/badmintoncourts',
+    catchAsync(async (req, res) => {
+        const badmintoncourt = new BadmintonCourt(req.body.badmintoncourt);
+        await badmintoncourt.save();
+        res.redirect(`badmintoncourts/${badmintoncourt._id}`);
+    })
+);
 
 // show a badminton court
 app.get('/badmintoncourts/:id', async (req, res) => {
@@ -69,6 +73,11 @@ app.delete('/badmintoncourts/:id/', async (req, res) => {
     const { id } = req.params;
     await BadmintonCourt.findByIdAndDelete(id);
     res.redirect('/badmintoncourts');
+});
+
+// Default error
+app.use((err, req, res, next) => {
+    res.send('Something went wrong');
 });
 
 app.listen('8080', () => {
