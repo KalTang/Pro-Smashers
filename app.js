@@ -40,7 +40,7 @@ app.get('/badmintoncourts/add', async (req, res) => {
 // Adds a badminton court to database
 app.post(
     '/badmintoncourts',
-    catchAsync(async (req, res) => {
+    catchAsync(async (req, res, next) => {
         const badmintoncourt = new BadmintonCourt(req.body.badmintoncourt);
         await badmintoncourt.save();
         res.redirect(`badmintoncourts/${badmintoncourt._id}`);

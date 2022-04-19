@@ -5,7 +5,7 @@ const BadmintonCourtSchema = new Schema({
     title: String,
     city: String,
     country: String,
-    price: String,
+    price: Number,
     image: String,
     description: String,
 });
