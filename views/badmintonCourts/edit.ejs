@@ -6,6 +6,8 @@
         <form
             action="/badmintoncourts/<%= badmintoncourt._id %>?_method=PUT"
             method="POST"
+            novalidate
+            class="validated-form"
         >
             <div class="mb-3">
                 <label for="title">Title</label>
@@ -15,7 +17,9 @@
                     id="title"
                     name="badmintoncourt[title]"
                     value="<%= badmintoncourt.title  %> "
+                    required
                 />
+                <div class="valid-feedback">Looks good!</div>
             </div>
 
             <div class="mb-3">
@@ -25,8 +29,10 @@
                     type="text"
                     id="city"
                     name="badmintoncourt[city]"
-                    value="<%= badmintoncourt.city  %> "
+                    value="<%= badmintoncourt.city %> "
+                    required
                 />
+                <div class="valid-feedback">Looks good!</div>
             </div>
 
             <div class="mb-3">
@@ -37,7 +43,9 @@
                     id="country"
                     name="badmintoncourt[country]"
                     value="<%= badmintoncourt.country  %> "
+                    required
                 />
+                <div class="valid-feedback">Looks good!</div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="image">Image URL</label>
@@ -47,7 +55,9 @@
                     id="image"
                     name="badmintoncourt[image]"
                     value="<%= badmintoncourt.image  %> "
+                    required
                 />
+                <div class="valid-feedback">Looks good!</div>
             </div>
             <div class="mb-3">
                 <label class="form-label" for="price">Price Per Hour</label>
@@ -62,7 +72,9 @@
                         aria-describedby="price-label"
                         name="badmintoncourt[price]"
                         value="<%= badmintoncourt.price  %> "
+                        required
                     />
+                    <div class="valid-feedback">Looks good!</div>
                 </div>
             </div>
 
@@ -73,9 +85,11 @@
                     type="text"
                     id="description"
                     name="badmintoncourt[description]"
+                    required
                 >
 <%= badmintoncourt.description  %></textarea
                 >
+                <div class="valid-feedback">Looks good!</div>
             </div>
             <div class="mb-3">
                 <button class="btn btn-info">Update</button>
