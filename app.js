@@ -7,6 +7,7 @@ const methodOverride = require('method-override');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const engine = require('ejs-mate');
+const Joi = require('joi');
 
 mongoose.connect('mongodb://localhost:27017/BadmintonBaddies');
 
@@ -42,8 +43,24 @@ app.get('/badmintoncourts/add', async (req, res) => {
 app.post(
     '/badmintoncourts',
     catchAsync(async (req, res, next) => {
-        if (!req.body.badmintoncourt) {
-            throw new ExpressError('Invalid court data', 400);
+        // if (!req.body.badmintoncourt) {
+        //     throw new ExpressError('Invalid court data', 400);
+        // }
+        const badmintonCourtSchema = Joi.object({
+            badmintoncourt: Joi.object({
+                title: Joi.string().required(),
+                price: Joi.number().required().min(0),
+                city: Joi.string().required(),
+                country: Joi.string().required(),
+                image: Joi.string().required(),
+                description: Joi.string().required(),
+            }).required(),
+        });
+        const { error } = badmintonCourtSchema.validate(req.body);
+
+        if (error) {
+            const msg = error.details.map((e) => e.message).join(',');
+            throw new ExpressError(msg, 400);
         }
         const badmintoncourt = new BadmintonCourt(req.body.badmintoncourt);
         await badmintoncourt.save();
