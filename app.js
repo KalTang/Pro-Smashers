@@ -8,6 +8,7 @@ const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const engine = require('ejs-mate');
 const Joi = require('joi');
+const { badmintonCourtSchema } = require('./schemas');
 
 mongoose.connect('mongodb://localhost:27017/BadmintonBaddies');
 
@@ -26,18 +27,7 @@ app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
 const badmintonCourtValidations = (req, res, next) => {
-    const badmintonCourtSchema = Joi.object({
-        badmintoncourt: Joi.object({
-            title: Joi.string().required(),
-            price: Joi.number().required().min(0),
-            city: Joi.string().required(),
-            country: Joi.string().required(),
-            image: Joi.string().required(),
-            description: Joi.string().required(),
-        }).required(),
-    });
     const { error } = badmintonCourtSchema.validate(req.body);
-
     if (error) {
         const msg = error.details.map((e) => e.message).join(',');
         throw new ExpressError(msg, 400);
