@@ -17,6 +17,7 @@ db.once('open', () => {
     console.log('Database connected');
 });
 
+// Middlewares
 app.engine('ejs', engine);
 app.use(express.urlencoded({ extended: true }));
 app.use(methodOverride('_method'));
@@ -24,6 +25,28 @@ app.use(methodOverride('_method'));
 app.set('view engine', 'ejs');
 app.set('views', path.join(__dirname, 'views'));
 
+const badmintonCourtValidations = (req, res, next) => {
+    const badmintonCourtSchema = Joi.object({
+        badmintoncourt: Joi.object({
+            title: Joi.string().required(),
+            price: Joi.number().required().min(0),
+            city: Joi.string().required(),
+            country: Joi.string().required(),
+            image: Joi.string().required(),
+            description: Joi.string().required(),
+        }).required(),
+    });
+    const { error } = badmintonCourtSchema.validate(req.body);
+
+    if (error) {
+        const msg = error.details.map((e) => e.message).join(',');
+        throw new ExpressError(msg, 400);
+    } else {
+        next();
+    }
+};
+
+// ===Routes===
 app.get('/', (req, res) => {
     res.render('home');
 });
@@ -42,26 +65,8 @@ app.get('/badmintoncourts/add', async (req, res) => {
 // Adds a badminton court to database
 app.post(
     '/badmintoncourts',
+    badmintonCourtValidations,
     catchAsync(async (req, res, next) => {
-        // if (!req.body.badmintoncourt) {
-        //     throw new ExpressError('Invalid court data', 400);
-        // }
-        const badmintonCourtSchema = Joi.object({
-            badmintoncourt: Joi.object({
-                title: Joi.string().required(),
-                price: Joi.number().required().min(0),
-                city: Joi.string().required(),
-                country: Joi.string().required(),
-                image: Joi.string().required(),
-                description: Joi.string().required(),
-            }).required(),
-        });
-        const { error } = badmintonCourtSchema.validate(req.body);
-
-        if (error) {
-            const msg = error.details.map((e) => e.message).join(',');
-            throw new ExpressError(msg, 400);
-        }
         const badmintoncourt = new BadmintonCourt(req.body.badmintoncourt);
         await badmintoncourt.save();
         res.redirect(`badmintoncourts/${badmintoncourt._id}`);
@@ -83,6 +88,7 @@ app.get('/badmintoncourts/:id/edit', async (req, res) => {
 // updates a badminton court
 app.put(
     '/badmintoncourts/:id',
+    badmintonCourtValidations,
     catchAsync(async (req, res) => {
         const { id } = req.params;
         const badmintoncourt = await BadmintonCourt.findByIdAndUpdate(id, {
