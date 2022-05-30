@@ -7,8 +7,9 @@ const methodOverride = require('method-override');
 const catchAsync = require('./utils/catchAsync');
 const ExpressError = require('./utils/ExpressError');
 const engine = require('ejs-mate');
-const Joi = require('joi');
 const { badmintonCourtSchema } = require('./schemas');
+const { object } = require('joi');
+const ObjectId = require('mongoose').Types.ObjectId;
 
 mongoose.connect('mongodb://localhost:27017/BadmintonBaddies');
 
@@ -65,8 +66,15 @@ app.post(
 
 // show a badminton court
 app.get('/badmintoncourts/:id', async (req, res) => {
-    const badmintoncourt = await BadmintonCourt.findById(req.params.id);
-    res.render('badmintonCourts/show', { badmintoncourt });
+    // check if it is valiud by Mongoose ID
+    const { id } = req.params;
+    if (ObjectId.isValid(id)) {
+        // valid
+        const badmintoncourt = await BadmintonCourt.findById(req.params.id);
+        res.render('badmintonCourts/show', { badmintoncourt });
+    } else {
+        res.render('error');
+    }
 });
 
 // Takes you to the edit form for the
